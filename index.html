@@ -14,16 +14,20 @@
     <title>JavaScript Pong Game</title>
   </head>
   <body>
-    <h1 class="title">Ball Bounce Paddle Game</h1>
+    <h1 class="title">PONG</h1>
     <span class="score player1Score" id="player1Score">0</span>
     <span class="score player2Score" id="player2Score">0</span>
-    <h3 class="startText" id="startText">Press any key to begin game</h3>
+    <h3 class="startText" id="startText">Press any key to start game</h3>
     <div class="gameArea">
       <div class="paddle1 paddle" id="paddle1"></div>
       <div class="paddle2 paddle" id="paddle2"></div>
       <div class="ball" id="ball"></div>
       <div class="net"></div>
-      <img src="assets/machine.png" alt="retro cabinet game" />
     </div>
+    <img class="bg" src="assets/machine.png" alt="retro cabinet game" />
+    <div class="vignette"></div>
+    <audio id="paddleSound" src="/assets/paddle.wav"></audio>
+    <audio id="wallSound" src="/assets/wall.wav"></audio>
+    <audio id="lossSound" src="/assets/loss.wav"></audio>
   </body>
 </html>
