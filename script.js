@@ -1,31 +1,47 @@
 const startGameText = document.getElementById("startText");
+const paddle1 = document.getElementById("paddle1");
+const paddleAcceleration = 1;
+const maxPaddleSpeed = 5;
 
 let gameRunning = false;
 let keysPressed = {};
+let paddle1Speed = 0;
+let paddle1Y = 150;
 
-document.addEventListener('keydown', startGame);
-document.addEventListener('keydown', handleKeyDown)
+document.addEventListener("keydown", startGame);
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
 
-const startGame = () => {
+function startGame() {
   gameRunning = true;
   startGameText.style.display = "none";
   document.removeEventListener("keydown", startGame);
 
   gameLoop();
-};
+}
 
-const gameLoop = () => {
+function gameLoop() {
   if (gameRunning) {
     updatePaddle1();
     setTimeout(gameLoop, 8);
   }
-};
-
-const handleKeyDown = (e) => {
-    keysPressed(e.key) = true;
-
 }
 
-const updatePaddle1 = () => {
-    
+function handleKeyDown(e) {
+  keysPressed[e.key] = true;
+}
+
+function handleKeyUp(e) {
+  keysPressed[e.key] = false;
+}
+
+function updatePaddle1() {
+  if (keysPressed["w"]) {
+    paddle1Speed = Math.max(paddle1Speed - paddleAcceleration, -maxPaddleSpeed);
+  } else if (keysPressed["s"]) {
+    paddle1Speed = Math.min(paddle1Speed + paddleAcceleration, maxPaddleSpeed);
+  }
+  paddle1Y += paddle1Speed;
+
+  paddle1.style.top = paddle1Y + "px";
 }
