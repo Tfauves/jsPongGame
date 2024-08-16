@@ -15,6 +15,7 @@ const gameHeight = 400;
 const gameWidth = 600;
 
 let gameRunning = false;
+let volleyCount = 0;
 let keysPressed = {};
 
 let paddle1Speed = 0;
@@ -49,6 +50,7 @@ function gameLoop() {
     updatePaddle1();
     updatePaddle2();
     moveBall();
+    console.log(volleyCount);
     setTimeout(gameLoop, 8);
   }
 }
@@ -114,6 +116,7 @@ function updatePaddle2() {
 function moveBall() {
   ballX += ballSpeedX;
   ballY += ballSpeedY;
+
   // wall collision
   if (ballY >= gameHeight - ball.clientHeight || ballY <= 0) {
     ballSpeedY = -ballSpeedY;
@@ -128,6 +131,7 @@ function moveBall() {
   ) {
     ballSpeedX = -ballSpeedX;
     playSound(paddleSound);
+    incrementVolleyCount();
   }
 
   // paddle 2 collision
@@ -138,6 +142,7 @@ function moveBall() {
   ) {
     ballSpeedX = -ballSpeedX;
     playSound(paddleSound);
+    incrementVolleyCount();
   }
 
   //out of game area collision
@@ -169,6 +174,7 @@ function resetBall() {
   ballY = gameHeight / 2 - ball.clientHeight / 2;
   ballSpeedX = Math.random() > 0.5 ? 2 : -2;
   ballSpeedY = Math.random() > 0.5 ? 2 : -2;
+  volleyCount = 0;
 }
 
 function pauseGame() {
@@ -179,4 +185,28 @@ function pauseGame() {
 function playSound(sound) {
   sound.currentTime = 0;
   sound.play();
+}
+
+function incrementVolleyCount() {
+  volleyCount++;
+
+  if (volleyCount % 5 === 0) {
+    // Increase speed every 5 volleys
+    increaseBallSpeed();
+  }
+}
+
+function increaseBallSpeed() {
+  // Increase the ball's speed by a small amount
+  if (ballSpeedX > 0) {
+    ballSpeedX += 0.5;
+  } else {
+    ballSpeedX -= 0.5;
+  }
+
+  if (ballSpeedY > 0) {
+    ballSpeedY += 0.5;
+  } else {
+    ballSpeedY -= 0.5;
+  }
 }
